@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.7",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "morgan": "^1.10.0",
+    "sqlite3": "^5.1.6"
+  },
+  "name": "test-app-react-server",
+  "description": "Server side of the test-app-react",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ikromjon Ochilov",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8"
+  }
+}

@@ -1,17 +1,17 @@
 "use strict";
 
+/* Same of week 09, but 1) with require() instead of import and 2) without any internal methods */
+
 const dayjs = require("dayjs");
 
-// Define the Answer class
-function Answer(id, text, name, date, score = 0) {
+function Answer(id, text, author, date, score = 0) {
   this.id = id;
   this.text = text;
-  this.name = name;
+  this.author = author;
   this.score = score;
   this.date = dayjs(date);
 }
 
-// Define the Question class
 function Question(id, text, author, date) {
   this.id = id;
   this.text = text;
@@ -19,5 +19,4 @@ function Question(id, text, author, date) {
   this.date = dayjs(date);
 }
 
-// Export the Question and Answer classes
 module.exports = { Question, Answer };

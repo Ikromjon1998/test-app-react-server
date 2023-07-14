@@ -17,6 +17,8 @@
   "author": "Ikromjon Ochilov",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8"
   }

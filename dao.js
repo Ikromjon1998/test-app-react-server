@@ -4,7 +4,7 @@ const sqlite = require("sqlite3");
 const { Question, Answer } = require("./QAModels");
 
 // open the database
-const db = new sqlite.Database("./questions.sqlite", (err) => {
+const db = new sqlite.Database("questions.sqlite", (err) => {
   if (err) throw err;
 });
 
@@ -31,7 +31,7 @@ exports.getQuestion = (id) => {
     const sql = "SELECT * FROM question WHERE id = ?";
     db.get(sql, [id], (err, row) => {
       if (err) reject(err);
-      if (row === undefined) resolve({ error: "Question not found." });
+      if (row == undefined) resolve({ error: "Question not found." });
       else {
         const question = new Question(row.id, row.text, row.author, row.date);
         resolve(question);
@@ -67,7 +67,7 @@ exports.listAnswersOf = (questionId) => {
         reject(err);
       }
       const answers = rows.map(
-        (a) => new Answer(a.id, a.text, a.name, a.date, a.questionId, a.score)
+        (a) => new Answer(a.id, a.text, a.author, a.date, a.score)
       );
       resolve(answers);
     });
@@ -75,19 +75,13 @@ exports.listAnswersOf = (questionId) => {
 };
 
 // add a new answer
-exports.addAnswer = (answer) => {
+exports.addAnswer = (answer, questionId) => {
   return new Promise((resolve, reject) => {
     const sql =
       "INSERT INTO answer(text, author, date, score, questionId) VALUES (?, ?, DATE(?), ?, ?)";
     db.run(
       sql,
-      [
-        answer.text,
-        answer.author,
-        answer.date,
-        answer.score,
-        answer.questionId,
-      ],
+      [answer.text, answer.author, answer.date, answer.score, questionId],
       function (err) {
         if (err) reject(err);
         else resolve(this.lastID);
@@ -97,8 +91,21 @@ exports.addAnswer = (answer) => {
 };
 
 // update an existing answer
-exports.updateAnswer = (answer) => {
-  // write something clever
+exports.updateAnswer = (answer, answerId) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "UPDATE answer SET text=?, author=?, date=DATE(?), score=? WHERE id=?";
+    db.run(
+      sql,
+      [answer.text, answer.author, answer.date, answer.score, answerId],
+      function (err) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else resolve(this.lastID);
+      }
+    );
+  });
 };
 
 // vote for an answer
